@@ -1,11 +1,13 @@
+import HomeScreen from './screens/HomeScreen/HomeScreen';
+
 import './App.css';
 
-function App() {
+const App = () => {
   return (
     <div className="app">
-      <h1>I Love ReactJS</h1>
+      <HomeScreen />
     </div>
   );
-}
+};
 
 export default App;
