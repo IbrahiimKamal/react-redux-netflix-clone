@@ -1,6 +1,29 @@
+import { useEffect, useState } from 'react';
+
+import axios from '../../api/axios';
+import requests from '../../api/requests';
+
 import './Banner.css';
 
 const Banner = () => {
+  const [movie, setMovie] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const request = await axios.get(requests.fetchNetflixOriginals);
+      setMovie(
+        request.data.results[
+          Math.floor(Math.random() * request.data.results.length - 1)
+        ]
+      );
+      return request;
+    }
+
+    fetchData();
+  }, []);
+
+  console.log(movie);
+
   // If you ask yourself why I didn't use the arrow function here?!
   // simply because I don't need it ;)
   // you only use it when you need to use it ^_^
@@ -12,30 +35,21 @@ const Banner = () => {
     <header
       className="banner"
       style={{
-        backgroundImage: `url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Black_flag.svg/1200px-Black_flag.svg.png')`,
+        backgroundImage: `url('https://image.tmdb.org/t/p/original/${movie?.backdrop_path}')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
       }}
     >
       <div className="banner__contents">
-        <h1 className="banner__title">Movie Name</h1>
+        <h1 className="banner__title">
+          {movie?.title || movie?.name || movie?.original_name}
+        </h1>
         <div className="banner__buttons">
           <button className="banner__button">Play</button>
           <button className="banner__button">My List</button>
         </div>
         <h1 className="banner__description">
-          {truncate(
-            `
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus
-          reprehenderit praesentium cumque nihil neque sint voluptas, quo magnam
-          vitae ipsum deserunt totam temporibus voluptatibus, quibusdam quod eum
-          non pariatur quidem! Lorem ipsum dolor sit amet consectetur
-          adipisicing elit. Repellendus reprehenderit praesentium cumque nihil
-          neque sint voluptas, quo magnam vitae ipsum deserunt totam temporibus
-          voluptatibus, quibusdam quod eum non pariatur quidem!
-            `,
-            150
-          )}
+          {truncate(movie?.overview, 150)}
         </h1>
       </div>
 
