@@ -25,8 +25,9 @@ const Banner = () => {
   console.log(movie);
 
   // If you ask yourself why I didn't use the arrow function here?!
-  // simply because I don't need it ;)
-  // you only use it when you need to use it ^_^
+  // simply because I don't need it
+  // you only use it when you need to use it
+  // Ibrahim Kamal :)
   function truncate(string, n) {
     return string?.length > n ? string.substr(0, n - 1) + '...' : string;
   }
